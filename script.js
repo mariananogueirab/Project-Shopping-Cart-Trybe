@@ -1,3 +1,5 @@
+const urlApiMercadoLivre = 'https://api.mercadolibre.com/sites/MLB';
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -12,7 +14,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   const section = document.createElement('section');
   section.className = 'item';
 
@@ -24,29 +26,41 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
+/* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-}
+} */
 
-function cartItemClickListener(event) {
+/* function cartItemClickListener(event) {
   // coloque seu código
-}
+} */
 
-const fetchApiMercadoLivre = (query) => {
-  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
-  .then((response) => response.json())
-  .then((object) => console.log(object.results))
-  // object.results já é um array.
-}
+const fetchApiMercadoLivre = async (endPoint) => {
+  try {
+    const response = await fetch(`${urlApiMercadoLivre}${endPoint}`);
+  const product = await response.json();
+  return product;
+  } catch (error) {
+    alert('Não foi possível acessar à api');
+  }
+};
 
-function createCartItemElement({ sku, name, salePrice }) {
+const createProductsGrid = async () => {
+  const product = await fetchApiMercadoLivre('/search?q=computador');
+  product.results.forEach((result) => {
+    const item = createProductItemElement(result);
+    const sectionItems = document.querySelector('.items');
+    sectionItems.appendChild(item);
+  });
+};
+
+/* function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.addEventListener('click', cartItemClickListener);
   return li;
-}
+} */
 
 window.onload = () => {
-  fetchApiMercadoLivre('computador');
+  createProductsGrid();
 };
