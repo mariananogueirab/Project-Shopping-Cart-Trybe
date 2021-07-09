@@ -32,6 +32,13 @@ function cartItemClickListener(event) {
   // coloque seu código
 }
 
+const fetchApiMercadoLivre = (query) => {
+  fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
+  .then((response) => response.json())
+  .then((object) => console.log(object.results))
+  // object.results já é um array.
+}
+
 function createCartItemElement({ sku, name, salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -40,4 +47,6 @@ function createCartItemElement({ sku, name, salePrice }) {
   return li;
 }
 
-window.onload = () => { };
+window.onload = () => {
+  fetchApiMercadoLivre('computador');
+};
