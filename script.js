@@ -138,16 +138,17 @@ function getCartSaved() {
   return item.querySelector('span.item__sku').innerText;
 } */
 
-/* function clearCart() {
+function clearCartList() {
   const buttonClear = document.querySelector('.empty-cart');
   const cartList = document.querySelector(cartOl);
   buttonClear.addEventListener('click', () => {
-    cartList.innerHTML = '';
-  });
-} */
+  cartList.innerHTML = '';
+  localStorage.removeItem('cart');
+});
+}
 
 window.onload = async () => {
   await createProductsGrid();
   getCartSaved();
-  /* clearCart(); */
+  clearCartList();
 };
