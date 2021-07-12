@@ -36,20 +36,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function cartItemClickListener(event) {
+  const list = document.querySelector('.cart__items');
+  list.removeChild(event.target);
+}
+
 // FUNÇÃO 04.
 // Cria uma li no carrinho de compras com as informações do produto passado por parâmetro
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  // li.addEventListener('click', cartItemClickListener);
+  li.addEventListener('click', cartItemClickListener);
   return li;
 }
 
 // FUNÇÃO 05.
 // Adiciona a li à ol do carrinho
 const addProductCart = (li) => {
-  /* const li = createCartItemElement(); */
   const olItems = document.querySelector('.cart__items');
   olItems.appendChild(li);
 };
@@ -109,10 +113,6 @@ const createProductsGrid = async () => {
 
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
-} */
-
-/* function cartItemClickListener(event) {
-  // coloque seu código
 } */
 
 window.onload = async () => {
