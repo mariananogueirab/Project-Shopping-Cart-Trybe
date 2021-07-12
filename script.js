@@ -35,14 +35,15 @@ function createCustomElement(element, className, innerText) {
   e.innerText = innerText;
   return e;
 }
+const cartOl = '.cart_items';
 
 function saveCart() {
-  const cartList = document.querySelector('.cart__items');
+  const cartList = document.querySelector(cartOl);
   localStorage.setItem('cart', cartList.innerHTML);
 }
 
 function cartItemClickListener(event) {
-  const cartList = document.querySelector('.cart__items');
+  const cartList = document.querySelector(cartOl);
   cartList.removeChild(event.target);
   saveCart();
 }
@@ -60,7 +61,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 // FUNÇÃO 05.
 // Adiciona a li à ol do carrinho
 const addProductCart = (li) => {
-  const olItems = document.querySelector('.cart__items');
+  const olItems = document.querySelector(cartOl);
   olItems.appendChild(li);
 };
 
@@ -121,10 +122,9 @@ const createProductsGrid = async () => {
 function getCartSaved() {
   const cartSaved = localStorage.getItem('cart');
   if (cartSaved !== null) {
-    const cartList = document.querySelector('.cart__items');
+    const cartList = document.querySelector(cartOl);
     cartList.innerHTML = cartSaved;
     const productsCartList = document.querySelectorAll('.cart__item');
-    console.log(productsCartList);
     productsCartList.forEach((product) => {
       product.addEventListener('click', (event) => {
       cartList.removeChild(event.target);
