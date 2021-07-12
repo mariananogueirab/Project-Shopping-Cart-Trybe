@@ -36,9 +36,15 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
+function saveCart() {
+  const cartList = document.querySelector('.cart__items');
+  localStorage.setItem('cart', cartList.innerHTML);
+}
+
 function cartItemClickListener(event) {
-  const list = document.querySelector('.cart__items');
-  list.removeChild(event.target);
+  const cartList = document.querySelector('.cart__items');
+  cartList.removeChild(event.target);
+  saveCart();
 }
 
 // FUNÇÃO 04.
@@ -74,6 +80,7 @@ const getProduct = async (idProduct) => {
 async function getIdProduct(event) {
   const idProduct = event.target.parentNode.firstChild.innerText;
   await getProduct(idProduct);
+  saveCart();
 }
 
 // FUNÇÃO 08.
@@ -111,10 +118,27 @@ const createProductsGrid = async () => {
   });
 };
 
+function getCartSaved() {
+  const cartSaved = localStorage.getItem('cart');
+  if (cartSaved !== null) {
+    const cartList = document.querySelector('.cart__items');
+    cartList.innerHTML = cartSaved;
+    const productsCartList = document.querySelectorAll('.cart__item');
+    console.log(productsCartList);
+    productsCartList.forEach((product) => {
+      product.addEventListener('click', (event) => {
+      cartList.removeChild(event.target);
+      saveCart();
+    });
+    });
+  }
+}
+
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 } */
 
 window.onload = async () => {
   await createProductsGrid();
+  getCartSaved();
 };
