@@ -111,7 +111,10 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // forEach: pra cada resultado dessa busca eu vou criar um item na lista, com a função que já veio, e vou linkar ela à seção de items.
 // Chamo essa função no onload.
 const createProductsGrid = async () => {
+  const loading = document.querySelector('.loading');
+  loading.style.display = 'flex';
   const product = await fetchApiMercadoLivre('search?q=computador');
+  loading.style.display = 'none';
   const sectionItems = document.querySelector('.items');
   product.results.forEach((result) => {
     const item = createProductItemElement(result);
