@@ -112,9 +112,9 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 // Chamo essa função no onload.
 const createProductsGrid = async () => {
   const loading = document.querySelector('.loading');
-  loading.style.display = 'flex';
+  const body = document.getElementsByTagName('body');
   const product = await fetchApiMercadoLivre('search?q=computador');
-  loading.style.display = 'none';
+  body[0].removeChild(loading);
   const sectionItems = document.querySelector('.items');
   product.results.forEach((result) => {
     const item = createProductItemElement(result);
